@@ -30,14 +30,16 @@ class Button {
      * will be black.
      */
     draw() {
-        if (this.#mouseIsOver){
+        if (this.#mouseIsOver()){
             fill(0, 0, 255)
         } else{
             fill(0)
         }
         rect(this.x, this.y, this.width, this.height);
+        fill(255);
         textAlign(CENTER);
-        text(this.label, this.x, this.y)
+        textSize(20);
+        text(this.label, this.x + this.width/2, this.y + this.height/2)
     }
 
     /**
@@ -45,7 +47,7 @@ class Button {
      * @returns {boolean} True if the mouse is over the button, false otherwise.
      */
     #mouseIsOver() {
-        if (mouseX > this.x && mouseX < this.width && mouseY > this.y && mouseY < height){
+        if (mouseX > this.x && mouseX < this.x + this.width && mouseY > this.y && mouseY < this.y + this.height){
             return true
         } else {
             return false
@@ -58,7 +60,7 @@ class Button {
      * @returns {boolean} True if the button is clicked, false otherwise.
      */
     clicked() {
-        if (this.#mouseIsOver && mouseIsPressed){
+        if (this.#mouseIsOver() && mouseIsPressed){
             return true
         } else {
             return false
@@ -66,12 +68,25 @@ class Button {
     }
 }
 
-let 
+let button = new Button(50, 150, 300, 100, "Click me");
+let counter = 0;
+let message = `The button has been clicked ${counter} times.`;
+
 
 function setup(){
     createCanvas(400, 400);
 }
 
 function draw(){
+    background(255);
+    button.draw()
+    updateTotal()
+    fill(0, 0, 255);
+    text(message, 200, 300)
+}
 
+function updateTotal(){
+    if (button.clicked()){
+        counter += 1
+    }
 }
